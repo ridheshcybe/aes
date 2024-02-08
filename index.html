@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES</title>
+    <script src="./out/index.js"></script>
+</head>
+
+<body>
+    <form onsubmit="run()">
+        <input type="text" placeholder="Password" name="pwd" id="pwd" required>
+        <select name="type" id="type">
+            <option value="enc" selected>Encrypt</option>
+            <option value="dec">Decrypt</option>
+        </select>
+        <input type="text" name="in" id="in">
+        <p id="out"></p>
+        <button type="submit">Submit</button>
+    </form>
+    <script src="./out/index.js"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>
