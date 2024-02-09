@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "locale": "c",
-        "*.inc": "c"
+        "*.inc": "c",
+        "evp.h": "c",
+        "err.h": "c",
+        "conf.h": "c",
+        "aes.h": "c"
     }
 }

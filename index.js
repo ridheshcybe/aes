@@ -14,6 +14,7 @@ async function run(ev) {
     const pwd = await digestMessage(pwdhtm.innerText);
     const input = inputhtm.innerText;
     const type = typehtm.value == "enc" ? "encrypt" : "decrypt";
+    const expandedkey = Module.ccall("keyExpansion", "string", ["string"], [pwd]);
 
-    outhtm.innerHTML = Module.ccall(type,"number", ["string","number","string"], input,input.length,pwd,crypto.randomUUID())
+    outhtm.innerHTML = Module.ccall(type,"string", ["string","string","string"], [input,expandedkey,cipher])
 }
