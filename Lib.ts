@@ -232,7 +232,6 @@ function cryptDec(block: number[], strkey: string): void {
   addRoundKey(block, key.slice(0, bB));
 }
 
-// ----------------------------MCRYPT.JS---------------------------
 export function encrypt(textin: string, IV: string, key: string, cipher: cipherTypes): string {
   if (!textin) throw new Error("Crypt: textin not possible");
 

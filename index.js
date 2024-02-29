@@ -20,9 +20,27 @@ enc.onclick = () => {
             break;
     }
 
-    out.innerText = Mod.encrypt(input.value, crypto.randomUUID().slice(0, blockS), pwd.value, parseInt(bs.value));
+    const password = pwd.value;
+    const inputval = input.value;
+    const Size = parseInt(bs.value);
+    const iv = crypto.randomUUID().slice(0, blockS);
 
+    if (![128, 192, 256].includes(Size)) {
+        return out.innerText = `Crypt error: Invalid size should be 128/192/256 it is ${Size}`
+    }
+
+    if (password.length !== 16) {
+        return out.innerText = `Crypt error: password must be 16 characters`
+    }
+
+    try {
+        const encrypted = Mod.encrypt(inputval, iv, password, Size)
+        out.innerText = encrypted || `Crypt error Decrypt: input: ${inputval}\n password: ${password}\n size: ${Size}`;;
+    } catch (err) {
+        out.innetText = JSON.stringify(err);
+    }
 }
+
 dec.onclick = () => {
     let blockS = 16;
     switch (bs.value) {
@@ -37,7 +55,21 @@ dec.onclick = () => {
             break;
     }
 
-    out.innerText = Mod.decrypt(input.value, pwd.value, parseInt(bs.value));
+    const password = pwd.value;
+    const inputval = input.value;
+    const Size = parseInt(bs.value);
 
+    if (![128, 192, 256].includes(Size)) {
+        return out.innerText = `Crypt error: Invalid size should be 128/192/256 it is ${Size}`
+    }
+
+    if (password.length !== 16) {
+        return out.innerText = `Crypt error: password must be 16 characters`
+    }
+
+    try {
+        out.innerText = Mod.decrypt(inputval, password, Size) || `Crypt error Decrypt: input: ${inputval}\n password: ${password}\n size: ${Size}`;
+    } catch (err) {
+        out.innetText = JSON.stringify(err);
+    }
 }
-console.log(Mod);
