@@ -4,23 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AES</title>
-    <script src="./out/index.js"></script>
+    <title>Home</title>
 </head>
 
 <body>
-    <form onsubmit="run()">
-        <input type="text" placeholder="Password" name="pwd" id="pwd" required>
-        <select name="type" id="type">
-            <option value="enc" selected>Encrypt</option>
-            <option value="dec">Decrypt</option>
-        </select>
-        <input type="text" name="in" id="in">
-        <p id="out"></p>
-        <button type="submit">Submit</button>
-    </form>
-    <script src="./out/index.js"></script>
-    <script src="./index.js"></script>
+    <input type="text" name="input" id="in">
+    <input type="password" name="password" id="pwd">
+    <select name="type" id="blocksize">
+        <option value="128" selected>128</option>
+        <option value="192">192</option>
+        <option value="256">256</option>
+    </select>
+    <button type="submit" id="enc">Encrypt</button>
+    <button type="submit" id="dec">Decrypt</button>
+    <p id="out"></p>
+    <script type="module" src="./index.js"></script>
 </body>
 
 </html>

@@ -1,20 +1,43 @@
-const pwdhtm = document.getElementById("pwd");
-const typehtm = document.getElementById("type");
-const inputhtm = document.getElementById("in");
-const outhtm = document.getElementById("out");
+import Mod from './Lib.js';
+const input = document.getElementById("in");
+const pwd = document.getElementById("pwd");
+const out = document.getElementById("out");
+const bs = document.getElementById("blocksize");
+const enc = document.getElementById("enc");
+const dec = document.getElementById("dec");
 
-async function digestMessage(message) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(message);
-    const hash = await crypto.subtle.digest("SHA-256", data);
-    return hash;
-  }
+enc.onclick = () => {
+    let blockS = 16;
+    switch (bs.value) {
+        case 128:
+            blockS = 16
+            break;
+        case 192:
+            blockS = 24
+            break;
+        case 256:
+            blockS = 32
+            break;
+    }
 
-async function run(ev) {
-    const pwd = await digestMessage(pwdhtm.innerText);
-    const input = inputhtm.innerText;
-    const type = typehtm.value == "enc" ? "encrypt" : "decrypt";
-    const expandedkey = Module.ccall("keyExpansion", "string", ["string"], [pwd]);
+    out.innerText = Mod.encrypt(input.value, crypto.randomUUID().slice(0, blockS), pwd.value, parseInt(bs.value));
 
-    outhtm.innerHTML = Module.ccall(type,"string", ["string","string","string"], [input,expandedkey,cipher])
 }
+dec.onclick = () => {
+    let blockS = 16;
+    switch (bs.value) {
+        case 128:
+            blockS = 16
+            break;
+        case 192:
+            blockS = 24
+            break;
+        case 256:
+            blockS = 32
+            break;
+    }
+
+    out.innerText = Mod.decrypt(input.value, pwd.value, parseInt(bs.value));
+
+}
+console.log(Mod);
