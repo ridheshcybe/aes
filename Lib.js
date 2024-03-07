@@ -129,13 +129,13 @@ const cryptR = function (block, key, encrypt) {
     case 32: bBi++;
     case 24: bBi++;
     case 16: break;
-    default: throw 'Rijndael: Unsupported block size: ' + block.length;
+    default: return new Error(`Rijndael: Unsupported block size: ${block.length}`);
   }
   switch (kB) {
     case 32: kBi++;
     case 24: kBi++;
     case 16: break;
-    default: throw 'Rijndael: Unsupported key size: ' + key.length;
+    default: return new Error(`Rijndael: Unsupported key size: ${key.length}`);
   }
   const r = rounds[bBi][kBi];
   key = expandKey(key);
@@ -185,16 +185,17 @@ const rijndaelCipher = function (block, key, encrypt) {
  * @param {string} IV 
  * @returns {string}
  */
-function crypt(encrypt, Text, key, IV) {
-  if (!Text) throw new Error("Text cannot be empty");
+export default function crypt(encrypt, Text, Key, IV) {
+  if (!Text) return new Error("Text cannot be empty");
   if (!encrypt) {
-    if (!Text.includes("\x30")) throw new Error("IV SHOULD BE INCLUDED");
-    [Text, IV] = Text.split("\x30");
+    if (!Text.includes("(IVSPLIT)")) return new Error("IV SHOULD BE INCLUDED");
+    [Text, IV] = Text.split("(IVSPLIT)");
   }
   const text = Text.split("").map(e => (e).charCodeAt(0));
+  const key = Key.split("").map(e => e.charCodeAt(0));
 
-  if (!IV) throw new Error('JS-Rijndael crypt: IV is required for mode cbc');
-  if (IV.length != 32) throw new Error('JS-Rijndael crypt: IV must be 32 bytes long for 256 encryption Got:' + IV.length);
+  if (!IV) return new Error('JS-Rijndael crypt: IV is required for mode cbc');
+  if (IV.length != 32) return new Error('JS-Rijndael crypt: IV must be 32 bytes long for 256 encryption Got:' + JSON.stringify({ Len: IV.length, iv: IV }));
 
   let iv = IV.slice().split("").map(e => (e).charCodeAt(0));
   const chunkS = 32;
@@ -211,7 +212,6 @@ function crypt(encrypt, Text, key, IV) {
       for (let j = 0; j < chunkS; j++) {
         iv[j] = text[(i * chunkS) + j] ^ iv[j];
       }
-
       rijndaelCipher(iv, key, true);
       for (let j = 0; j < chunkS; j++) {
         out.push(iv[j]);
@@ -238,6 +238,6 @@ function crypt(encrypt, Text, key, IV) {
   }
 
   const outte = out.map(e => String.fromCharCode(e)).join("");
-  if (!encrypt) return outte;
-  return `${outte}\x30${IV}`;
+  const trueout = (encrypt) ? `${outte}(IVSPLIT)${IV}` : outte;
+  return trueout;
 };
