@@ -241,4 +241,3 @@ export default function crypt(encrypt, Text, Key, IV) {
     const trueout = (encrypt) ? `${outte}(IVSPLIT)${IV}` : outte;
     return trueout;
 };
-module.exports = crypt;

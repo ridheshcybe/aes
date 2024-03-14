@@ -1,0 +1,25 @@
+{
+  "name": "aes",
+  "main": "./node.js",
+  "type": "module",
+  "browser": "./browser.js",
+  "scripts": {},
+  "repository": {
+    "url": "git+https://github.com/ridheshcybe/aes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ridheshcybe/aes/issues"
+  },
+  "homepage": "https://github.com/ridheshcybe/aes#readme",
+  "version": "0.0.1",
+  "description": "A app that encrypts/decrypts using aes 256",
+  "keywords": [
+    "aes",
+    "256",
+    "aes-256",
+    "browser",
+    "node"
+  ],
+  "author": "ridhesh w <https://github.com/ridheshcybe>",
+  "license": "MIT"
+}
