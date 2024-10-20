@@ -1,3 +1,5 @@
+# THIS HAS BEEN MERGED TO https://github.com/ridheshcybe/encrypte/
+
 Simple encrypt decrypt using aes 256 cbc
 
 Inputs
